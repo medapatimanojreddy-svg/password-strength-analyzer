@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Strength Analyzer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css?v=19">
+</head>
+<body>
+
+  <div class="page-wrapper">
+    <!-- Top Area on Sky Blue Background -->
+    <div class="sky-blue-area">
+      
+      <!-- Section 1: Main Analyzer -->
+      <section class="section-hero">
+        <div class="dashboard-container">
+          <div class="analyzer-card">
+            <div class="analyzer-header">
+              <div class="icon-circle">
+                <i class="fa-solid fa-shield-halved"></i>
+              </div>
+              <h1>Password Strength Analyzer</h1>
+              <p class="subtitle">Real-time security evaluation</p>
+            </div>
+
+            <div class="form-group">
+              <label for="password-input" class="input-label">Enter your password</label>
+              <div class="input-container">
+                <input 
+                  type="password" 
+                  id="password-input" 
+                  class="password-field" 
+                  placeholder="Enter your password..." 
+                  autocomplete="off" 
+                  spellcheck="false" 
+                  autofocus
+                >
+                <!-- Single Eye Icon Button -->
+                <button type="button" id="toggle-password" class="toggle-btn" title="Show or hide password" aria-label="Toggle password visibility">
+                  <i class="fa-regular fa-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Strength Meter -->
+            <div class="meter-group">
+              <div class="meter-info">
+                <span class="meter-title">Password Strength</span>
+                <span class="strength-badge" id="strength-badge">Empty</span>
+              </div>
+              <div class="meter-track">
+                <div class="meter-bar" id="meter-bar"></div>
+              </div>
+              <p class="feedback-msg" id="feedback-msg"></p>
+            </div>
+          </div>
+
+          <!-- Scroll down indicator -->
+          <a href="#analysis-section" class="scroll-down-hint">
+            <span>Scroll down for detailed analysis</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </a>
+        </div>
+      </section>
+
+      <!-- Section 2: Detailed Analysis on Scroll Down -->
+      <section class="section-analysis" id="analysis-section">
+        <div class="dashboard-container">
+          <div class="analyzer-card analysis-card">
+            <div class="analyzer-header">
+              <h2>Detailed Analysis</h2>
+              <p class="subtitle">Breakdown for your current password</p>
+            </div>
+
+            <div class="analysis-list">
+              
+              <!-- 1. Check whether password is commonly used -->
+              <div class="analysis-row" id="row-common">
+                <div class="row-left">
+                  <div class="row-icon">
+                    <i class="fa-solid fa-database"></i>
+                  </div>
+                  <div>
+                    <div class="row-label">Check whether password is commonly used</div>
+                    <div class="row-status" id="val-common">No password entered</div>
+                  </div>
+                </div>
+                <span class="analysis-badge badge-neutral" id="badge-common">-</span>
+              </div>
+
+              <!-- 2. Current password score -->
+              <div class="analysis-row" id="row-score">
+                <div class="row-left">
+                  <div class="row-icon">
+                    <i class="fa-solid fa-gauge-high"></i>
+                  </div>
+                  <div>
+                    <div class="row-label">Current password score</div>
+                    <div class="row-status" id="val-score">0 / 100</div>
+                  </div>
+                </div>
+                <span class="analysis-badge badge-neutral" id="badge-score">0 / 100</span>
+              </div>
+
+              <!-- 3. Uppercase/lowercase -->
+              <div class="analysis-row" id="row-case">
+                <div class="row-left">
+                  <div class="row-icon">
+                    <i class="fa-solid fa-font"></i>
+                  </div>
+                  <div>
+                    <div class="row-label">Uppercase / lowercase</div>
+                    <div class="row-status" id="val-case">None detected</div>
+                  </div>
+                </div>
+                <span class="analysis-badge badge-neutral" id="badge-case">Missing</span>
+              </div>
+
+              <!-- 4. Numbers -->
+              <div class="analysis-row" id="row-numbers">
+                <div class="row-left">
+                  <div class="row-icon">
+                    <i class="fa-solid fa-arrow-down-1-9"></i>
+                  </div>
+                  <div>
+                    <div class="row-label">Numbers</div>
+                    <div class="row-status" id="val-numbers">None detected</div>
+                  </div>
+                </div>
+                <span class="analysis-badge badge-neutral" id="badge-numbers">Missing</span>
+              </div>
+
+              <!-- 5. Symbols -->
+              <div class="analysis-row" id="row-symbols">
+                <div class="row-left">
+                  <div class="row-icon">
+                    <i class="fa-solid fa-asterisk"></i>
+                  </div>
+                  <div>
+                    <div class="row-label">Symbols</div>
+                    <div class="row-status" id="val-symbols">None detected</div>
+                  </div>
+                </div>
+                <span class="analysis-badge badge-neutral" id="badge-symbols">Missing</span>
+              </div>
+
+              <!-- 6. Show security warnings -->
+              <div class="analysis-row" id="row-warnings">
+                <div class="row-left">
+                  <div class="row-icon">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                  </div>
+                  <div>
+                    <div class="row-label">Show security warnings</div>
+                    <div class="row-status" id="val-warnings">No password entered</div>
+                  </div>
+                </div>
+                <span class="analysis-badge badge-neutral" id="badge-warnings">-</span>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- Section 3: Suggested Passwords (shown only if password is weak) -->
+          <div class="analyzer-card suggestions-card" id="suggestions-card" style="display: none;">
+            <div class="analyzer-header" style="margin-bottom: 1.25rem;">
+              <div class="icon-circle" style="color: #0284c7; background: #e0f2fe; border-color: #bae6fd;">
+                <i class="fa-solid fa-lightbulb"></i>
+              </div>
+              <h2>Suggested Strong Passwords</h2>
+              <p class="subtitle">Your password is weak. Try one of these strong suggestions:</p>
+            </div>
+
+            <div class="suggestions-list" id="suggestions-list">
+              <!-- Dynamically populated via JS -->
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+    <!-- White Background Area: From About Project Downwards -->
+    <section class="section-white-bottom" id="about-section">
+      
+      <!-- Section 4: About Project (Much Bigger Card, Flowing Sentences) -->
+      <div class="about-container">
+        <div class="analyzer-card about-card-large" id="about-card">
+          <div class="about-header-centered">
+            <h2 class="about-title-highlight-large">About Project</h2>
+          </div>
+          <div class="about-sentences-wrapper">
+            <p class="about-sentences-text">
+              Real-Time Password Strength Checker is a security tool designed to help users create stronger, more secure passwords. Using advanced algorithms, it provides instant feedback on password complexity and offers actionable suggestions to improve security.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Section 5: HTML, CSS, JS, and Security Side-by-Side (Single Small Sentence Each) -->
+      <div class="tech-stack-container">
+        <!-- HTML Card -->
+        <div class="tech-card">
+          <div class="tech-icon-circle html-icon">
+            <i class="fa-brands fa-html5"></i>
+          </div>
+          <h3 class="tech-title">HTML</h3>
+          <p class="tech-desc">
+            Structures the semantic layout and interactive input form.
+          </p>
+        </div>
+
+        <!-- CSS Card -->
+        <div class="tech-card">
+          <div class="tech-icon-circle css-icon">
+            <i class="fa-brands fa-css3-alt"></i>
+          </div>
+          <h3 class="tech-title">CSS</h3>
+          <p class="tech-desc">
+            Styles the modern sky-blue theme and smooth meter animations.
+          </p>
+        </div>
+
+        <!-- JS Card -->
+        <div class="tech-card">
+          <div class="tech-icon-circle js-icon">
+            <i class="fa-brands fa-js"></i>
+          </div>
+          <h3 class="tech-title">JS</h3>
+          <p class="tech-desc">
+            Calculates real-time password strength and security warnings.
+          </p>
+        </div>
+
+        <!-- Security Card -->
+        <div class="tech-card">
+          <div class="tech-icon-circle security-icon">
+            <i class="fa-solid fa-shield-halved"></i>
+          </div>
+          <h3 class="tech-title">Security</h3>
+          <p class="tech-desc">
+            Runs 100% inside your browser with zero data stored.
+          </p>
+        </div>
+      </div>
+
+      <!-- Section 6: Cybersecurity & Personal Brand (Centered) -->
+      <div class="cyber-profile-wrapper">
+        <div class="cyber-profile-card">
+          <!-- Cybersecurity Header -->
+          <div class="cyber-header-group">
+            <div class="cyber-profile-logo">
+              <div class="cyber-avatar-ring">
+                <i class="fa-solid fa-user-shield"></i>
+              </div>
+            </div>
+            <div class="cyber-tag">Cybersecurity</div>
+          </div>
+
+          <!-- Specific Logo of Manoj Nagendra Reddy in Dark Black -->
+          <div class="an-logo-container">
+            <div class="an-logo-badge">
+              <div class="an-logo-icon">
+                <span>MNR</span>
+              </div>
+              <h2 class="an-logo-text">Manoj Nagendra Reddy</h2>
+            </div>
+          </div>
+
+          <!-- GitHub and LinkedIn Links (Below Manoj Nagendra Reddy Logo) -->
+          <div class="social-links-row">
+            <a href="https://github.com/medapatimanojreddy-svg" target="_blank" rel="noopener" class="social-btn github-btn">
+              <i class="fa-brands fa-github"></i>
+              <span>GitHub</span>
+            </a>
+            <a href="https://www.linkedin.com/in/manoj-reddy-medapati-a4120934a" target="_blank" rel="noopener" class="social-btn linkedin-btn">
+              <i class="fa-brands fa-linkedin"></i>
+              <span>LinkedIn</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </section>
+  </div>
+
+  <script src="js/common_passwords.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
